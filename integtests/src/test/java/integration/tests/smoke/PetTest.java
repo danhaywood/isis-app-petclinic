@@ -18,11 +18,11 @@
  */
 package integration.tests.smoke;
 
-import dom.simple.SimpleObject;
-import dom.simple.SimpleObjects;
-import fixture.simple.scenario.SimpleObjectsFixture;
-import fixture.simple.SimpleObjectsTearDownFixture;
-import integration.tests.SimpleAppIntegTest;
+import dom.simple.Pet;
+import dom.simple.Pets;
+import fixture.simple.scenario.PetsFixture;
+import fixture.simple.PetClinicAppTearDownFixture;
+import integration.tests.PetClinicAppIntegTest;
 
 import javax.inject.Inject;
 import org.junit.Test;
@@ -34,47 +34,47 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class SimpleObjectTest extends SimpleAppIntegTest {
+public class PetTest extends PetClinicAppIntegTest {
 
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    SimpleObjects simpleObjects;
+    Pets simpleObjects;
 
     FixtureScript fixtureScript;
 
-    public static class Name extends SimpleObjectTest {
+    public static class Name extends PetTest {
 
         @Test
         public void exists() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsFixture();
+            fixtureScript = new PetsFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
 
-            final SimpleObject simpleObjectPojo =
-                    fixtureScript.lookup("simple-objects-fixture/simple-object-for-foo/item-1", SimpleObject.class);
+            final Pet petPojo =
+                    fixtureScript.lookup("pets-fixture/pet-for-fido/item-1", Pet.class);
 
             // when
-            assertThat(simpleObjectPojo, is(not(nullValue())));
-            final SimpleObject simpleObjectWrapped = wrap(simpleObjectPojo);
+            assertThat(petPojo, is(not(nullValue())));
+            final Pet petWrapped = wrap(petPojo);
 
             // then
-            assertThat(simpleObjectWrapped.getName(), is("Foo"));
+            assertThat(petWrapped.getName(), is("Fido"));
         }
 
         @Test
         public void doesNotExist() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsTearDownFixture();
+            fixtureScript = new PetClinicAppTearDownFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
 
             // when
-            SimpleObject simpleObjectPojo = fixtureScript.lookup("non-existent", SimpleObject.class);
+            Pet petPojo = fixtureScript.lookup("non-existent", Pet.class);
 
             // then
-            assertThat(simpleObjectPojo, is(nullValue()));
+            assertThat(petPojo, is(nullValue()));
 
         }
     }

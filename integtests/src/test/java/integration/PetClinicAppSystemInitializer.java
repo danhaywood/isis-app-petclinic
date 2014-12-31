@@ -26,9 +26,9 @@ import org.apache.isis.objectstore.jdo.datanucleus.IsisConfigurationForJdoIntegT
  * Holds an instance of an {@link IsisSystemForTest} as a {@link ThreadLocal} on the current thread,
  * initialized with ToDo app's domain services. 
  */
-public class SimpleAppSystemInitializer {
+public class PetClinicAppSystemInitializer {
     
-    private SimpleAppSystemInitializer(){}
+    private PetClinicAppSystemInitializer(){}
 
     public static IsisSystemForTest initIsft() {
         IsisSystemForTest isft = IsisSystemForTest.getElseNull();

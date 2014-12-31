@@ -27,25 +27,25 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ParameterLayout;
 
-@DomainService(menuOrder = "10", repositoryFor = SimpleObject.class)
-public class SimpleObjects {
+@DomainService(menuOrder = "10", repositoryFor = Pet.class)
+public class Pets {
 
     //region > listAll (action)
 
     @Bookmarkable
     @ActionSemantics(Of.SAFE)
     @MemberOrder(sequence = "1")
-    public List<SimpleObject> listAll() {
-        return container.allInstances(SimpleObject.class);
+    public List<Pet> listAll() {
+        return container.allInstances(Pet.class);
     }
 
     //endregion
 
     //region > create (action)
     @MemberOrder(sequence = "2")
-    public SimpleObject create(
+    public Pet create(
             final @ParameterLayout(named="Name") String name) {
-        final SimpleObject obj = container.newTransientInstance(SimpleObject.class);
+        final Pet obj = container.newTransientInstance(Pet.class);
         obj.setName(name);
         container.persistIfNotAlready(obj);
         return obj;

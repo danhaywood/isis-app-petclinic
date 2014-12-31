@@ -37,7 +37,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 @javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
 @ObjectType("SIMPLE")
 @Bookmarkable
-public class SimpleObject implements Comparable<SimpleObject> {
+public class Pet implements Comparable<Pet> {
 
     //region > name (property)
 
@@ -59,7 +59,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
     //region > compareTo
 
     @Override
-    public int compareTo(SimpleObject other) {
+    public int compareTo(Pet other) {
         return ObjectContracts.compare(this, other, "name");
     }
 

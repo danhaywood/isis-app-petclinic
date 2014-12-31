@@ -17,15 +17,20 @@
  *  under the License.
  */
 
-package fixture.simple.objects;
+package fixture.simple;
 
-public class SimpleObjectForBaz extends SimpleObjectAbstract {
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
+
+public class PetClinicAppTearDownFixture extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-
-        create("Baz", executionContext);
+        isisJdoSupport.executeUpdate("delete from \"Pet\"");
     }
 
+
+    @javax.inject.Inject
+    private IsisJdoSupport isisJdoSupport;
 
 }

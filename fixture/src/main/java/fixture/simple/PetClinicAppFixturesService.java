@@ -18,7 +18,7 @@
  */
 package fixture.simple;
 
-import fixture.simple.scenario.SimpleObjectsFixture;
+import fixture.simple.scenario.PetsFixture;
 
 import java.util.List;
 import org.apache.isis.applib.annotation.DomainService;
@@ -35,9 +35,9 @@ import org.apache.isis.applib.fixturescripts.SimpleFixtureScript;
  */
 @DomainService
 @DomainServiceLayout(named="Prototyping", menuBar = DomainServiceLayout.MenuBar.SECONDARY, menuOrder = "20")
-public class SimpleObjectsFixturesService extends FixtureScripts {
+public class PetClinicAppFixturesService extends FixtureScripts {
 
-    public SimpleObjectsFixturesService() {
+    public PetClinicAppFixturesService() {
         super("fixture.simple");
     }
 
@@ -61,7 +61,7 @@ public class SimpleObjectsFixturesService extends FixtureScripts {
     @Prototype
     @MemberOrder(sequence="20")
     public Object installFixturesAndReturnFirst() {
-        final List<FixtureResult> run = findFixtureScriptFor(SimpleObjectsFixture.class).run(null);
+        final List<FixtureResult> run = findFixtureScriptFor(PetsFixture.class).run(null);
         return run.get(0).getObject();
     }
 

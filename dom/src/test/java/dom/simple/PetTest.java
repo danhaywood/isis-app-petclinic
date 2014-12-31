@@ -23,28 +23,28 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class SimpleObjectTest {
+public class PetTest {
 
-    SimpleObject simpleObject;
+    Pet pet;
 
     @Before
     public void setUp() throws Exception {
-        simpleObject = new SimpleObject();
+        pet = new Pet();
     }
 
-    public static class Name extends SimpleObjectTest {
+    public static class Name extends PetTest {
 
         @Test
         public void happyCase() throws Exception {
             // given
             String name = "Foobar";
-            assertThat(simpleObject.getName(), is(nullValue()));
+            assertThat(pet.getName(), is(nullValue()));
 
             // when
-            simpleObject.setName(name);
+            pet.setName(name);
 
             // then
-            assertThat(simpleObject.getName(), is(name));
+            assertThat(pet.getName(), is(name));
         }
     }
 

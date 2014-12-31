@@ -17,29 +17,15 @@
  *  under the License.
  */
 
-package fixture.simple.scenario;
+package fixture.simple.objects;
 
-import fixture.simple.SimpleObjectsTearDownFixture;
-import fixture.simple.objects.SimpleObjectForBar;
-import fixture.simple.objects.SimpleObjectForBaz;
-import fixture.simple.objects.SimpleObjectForFoo;
-
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-
-public class SimpleObjectsFixture extends FixtureScript {
-
-    public SimpleObjectsFixture() {
-        withDiscoverability(Discoverability.DISCOVERABLE);
-    }
+public class PetForSkye extends PetAbstract {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
 
-        executionContext.executeChild(this, new SimpleObjectsTearDownFixture());
-
-        executionContext.executeChild(this, new SimpleObjectForFoo());
-        executionContext.executeChild(this, new SimpleObjectForBar());
-        executionContext.executeChild(this, new SimpleObjectForBaz());
+        create("Skye", executionContext);
     }
+
 
 }

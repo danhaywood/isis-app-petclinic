@@ -19,12 +19,12 @@
 
 package fixture.simple.objects;
 
-public class SimpleObjectForFoo extends SimpleObjectAbstract {
+public class PetForFido extends PetAbstract {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
 
-        create("Foo", executionContext);
+        create("Fido", executionContext);
     }
 
 

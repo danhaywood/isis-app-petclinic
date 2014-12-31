@@ -17,20 +17,29 @@
  *  under the License.
  */
 
-package fixture.simple;
+package fixture.simple.scenario;
+
+import fixture.simple.PetClinicAppTearDownFixture;
+import fixture.simple.objects.PetForFido;
+import fixture.simple.objects.PetForTiddles;
+import fixture.simple.objects.PetForSkye;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;
 
-public class SimpleObjectsTearDownFixture extends FixtureScript {
+public class PetsFixture extends FixtureScript {
+
+    public PetsFixture() {
+        withDiscoverability(Discoverability.DISCOVERABLE);
+    }
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"SimpleObject\"");
+
+        executionContext.executeChild(this, new PetClinicAppTearDownFixture());
+
+        executionContext.executeChild(this, new PetForSkye());
+        executionContext.executeChild(this, new PetForFido());
+        executionContext.executeChild(this, new PetForTiddles());
     }
-
-
-    @javax.inject.Inject
-    private IsisJdoSupport isisJdoSupport;
 
 }

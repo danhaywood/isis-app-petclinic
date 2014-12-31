@@ -18,11 +18,11 @@
  */
 package integration.tests.smoke;
 
-import dom.simple.SimpleObject;
-import dom.simple.SimpleObjects;
-import fixture.simple.scenario.SimpleObjectsFixture;
-import fixture.simple.SimpleObjectsTearDownFixture;
-import integration.tests.SimpleAppIntegTest;
+import dom.simple.Pet;
+import dom.simple.Pets;
+import fixture.simple.scenario.PetsFixture;
+import fixture.simple.PetClinicAppTearDownFixture;
+import integration.tests.PetClinicAppIntegTest;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -40,7 +40,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SimpleObjectsTest extends SimpleAppIntegTest {
+public class PetsTest extends PetClinicAppIntegTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -48,61 +48,61 @@ public class SimpleObjectsTest extends SimpleAppIntegTest {
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    SimpleObjects simpleObjects;
+    Pets pets;
 
     FixtureScript fixtureScript;
 
-    public static class ListAll extends SimpleObjectsTest {
+    public static class ListAll extends PetsTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsFixture();
+            fixtureScript = new PetsFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<Pet> all = wrap(pets).listAll();
 
             // then
             assertThat(all.size(), is(3));
 
-            SimpleObject simpleObject = wrap(all.get(0));
-            assertThat(simpleObject.getName(), is("Foo"));
+            Pet pet = wrap(all.get(0));
+            assertThat(pet.getName(), is("Skye"));
         }
 
         @Test
         public void whenNone() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsTearDownFixture();
+            fixtureScript = new PetClinicAppTearDownFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<Pet> all = wrap(pets).listAll();
 
             // then
             assertThat(all.size(), is(0));
         }
     }
 
-    public static class Create extends SimpleObjectsTest {
+    public static class Create extends PetsTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsTearDownFixture();
+            fixtureScript = new PetClinicAppTearDownFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
 
             // when
-            wrap(simpleObjects).create("Faz");
+            wrap(pets).create("Bonzo");
 
             // then
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<Pet> all = wrap(pets).listAll();
             assertThat(all.size(), is(1));
         }
 
@@ -110,17 +110,17 @@ public class SimpleObjectsTest extends SimpleAppIntegTest {
         public void whenAlreadyExists() throws Exception {
 
             // given
-            fixtureScript = new SimpleObjectsTearDownFixture();
+            fixtureScript = new PetClinicAppTearDownFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
-            wrap(simpleObjects).create("Faz");
+            wrap(pets).create("Bonzo");
             nextTransaction();
 
             // then
             expectedException.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(simpleObjects).create("Faz");
+            wrap(pets).create("Bonzo");
             nextTransaction();
         }
 

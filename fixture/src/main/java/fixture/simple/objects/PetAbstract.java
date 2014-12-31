@@ -19,18 +19,18 @@
 
 package fixture.simple.objects;
 
-import dom.simple.SimpleObject;
-import dom.simple.SimpleObjects;
+import dom.simple.Pet;
+import dom.simple.Pets;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-public abstract class SimpleObjectAbstract extends FixtureScript {
+public abstract class PetAbstract extends FixtureScript {
 
-    protected SimpleObject create(final String name, ExecutionContext executionContext) {
+    protected Pet create(final String name, ExecutionContext executionContext) {
         return executionContext.addResult(this, simpleObjects.create(name));
     }
 
     @javax.inject.Inject
-    private SimpleObjects simpleObjects;
+    private Pets simpleObjects;
 
 }

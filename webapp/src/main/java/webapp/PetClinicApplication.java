@@ -61,7 +61,7 @@ import org.apache.isis.viewer.wicket.viewer.integration.wicket.AuthenticatedWebS
  * </pre>
  * 
  */
-public class SimpleApplication extends IsisWicketApplication {
+public class PetClinicApplication extends IsisWicketApplication {
 
     private static final long serialVersionUID = 1L;
 
