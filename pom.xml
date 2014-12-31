@@ -23,7 +23,7 @@
     <artifactId>petclinic</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Simple App</name>
+    <name>PetClinic App</name>
 
     <packaging>pom</packaging>
 

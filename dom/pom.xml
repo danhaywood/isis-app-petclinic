@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>petclinic-dom</artifactId>
-    <name>Simple App DOM</name>
+    <name>PetClinic App DOM</name>
 
     <build>
         <resources>

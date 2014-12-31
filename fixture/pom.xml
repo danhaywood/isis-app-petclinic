@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>petclinic-fixture</artifactId>
-    <name>Simple App Fixtures</name>
+    <name>PetClinic App Fixtures</name>
 
     <dependencies>
         <dependency>
