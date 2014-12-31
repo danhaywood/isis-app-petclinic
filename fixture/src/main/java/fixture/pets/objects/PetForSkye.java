@@ -17,14 +17,14 @@
  *  under the License.
  */
 
-package fixture.simple.objects;
+package fixture.pets.objects;
 
-public class PetForTiddles extends PetAbstract {
+public class PetForSkye extends PetAbstract {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
 
-        create("Tiddles", executionContext);
+        create("Skye", executionContext);
     }
 
 

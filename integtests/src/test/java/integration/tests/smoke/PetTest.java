@@ -18,10 +18,10 @@
  */
 package integration.tests.smoke;
 
-import dom.simple.Pet;
-import dom.simple.Pets;
-import fixture.simple.scenario.PetsFixture;
-import fixture.simple.PetClinicAppTearDownFixture;
+import dom.pets.Pet;
+import dom.pets.Pets;
+import fixture.pets.scenario.PetsFixture;
+import fixture.pets.PetClinicAppTearDownFixture;
 import integration.tests.PetClinicAppIntegTest;
 
 import javax.inject.Inject;

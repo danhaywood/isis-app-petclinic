@@ -16,9 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package fixture.simple;
+package fixture.pets;
 
-import fixture.simple.scenario.PetsFixture;
+import fixture.pets.scenario.PetsFixture;
 
 import java.util.List;
 import org.apache.isis.applib.annotation.DomainService;
@@ -38,7 +38,7 @@ import org.apache.isis.applib.fixturescripts.SimpleFixtureScript;
 public class PetClinicAppFixturesService extends FixtureScripts {
 
     public PetClinicAppFixturesService() {
-        super("fixture.simple");
+        super("fixture.pets");
     }
 
     @Override

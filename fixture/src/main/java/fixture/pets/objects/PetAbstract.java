@@ -17,15 +17,20 @@
  *  under the License.
  */
 
-package fixture.simple.objects;
+package fixture.pets.objects;
 
-public class PetForSkye extends PetAbstract {
+import dom.pets.Pet;
+import dom.pets.Pets;
 
-    @Override
-    protected void execute(ExecutionContext executionContext) {
+import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-        create("Skye", executionContext);
+public abstract class PetAbstract extends FixtureScript {
+
+    protected Pet create(final String name, ExecutionContext executionContext) {
+        return executionContext.addResult(this, simpleObjects.create(name));
     }
 
+    @javax.inject.Inject
+    private Pets simpleObjects;
 
 }

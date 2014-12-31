@@ -17,7 +17,7 @@
  *  under the License.
  */
 
-package fixture.simple.objects;
+package fixture.pets.objects;
 
 public class PetForFido extends PetAbstract {
 

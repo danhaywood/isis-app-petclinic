@@ -17,7 +17,7 @@
  *  under the License.
  */
 
-package fixture.simple;
+package fixture.pets;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.objectstore.jdo.applib.service.support.IsisJdoSupport;

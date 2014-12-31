@@ -47,8 +47,8 @@ public class PetClinicAppSystemInitializer {
             with(new DataNucleusPersistenceMechanismInstaller());
 
             // services annotated with @DomainService
-            withServicesIn( "dom.simple"
-                            ,"fixture.simple"
+            withServicesIn( "dom.pets"
+                            ,"fixture.pets"
                             ,"org.apache.isis.core.wrapper"
                             ,"org.apache.isis.applib"
                             ,"org.apache.isis.core.metamodel.services"

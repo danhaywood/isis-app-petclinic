@@ -17,20 +17,15 @@
  *  under the License.
  */
 
-package fixture.simple.objects;
+package fixture.pets.objects;
 
-import dom.simple.Pet;
-import dom.simple.Pets;
+public class PetForTiddles extends PetAbstract {
 
-import org.apache.isis.applib.fixturescripts.FixtureScript;
+    @Override
+    protected void execute(ExecutionContext executionContext) {
 
-public abstract class PetAbstract extends FixtureScript {
-
-    protected Pet create(final String name, ExecutionContext executionContext) {
-        return executionContext.addResult(this, simpleObjects.create(name));
+        create("Tiddles", executionContext);
     }
 
-    @javax.inject.Inject
-    private Pets simpleObjects;
 
 }
