@@ -39,6 +39,12 @@ import org.apache.isis.applib.util.ObjectContracts;
 @Bookmarkable
 public class Pet implements Comparable<Pet> {
 
+    //region > iconName
+    public String iconName() {
+        return getSpecies().name();
+    }
+    //endregion
+
     //region > name (property)
 
     private String name;
