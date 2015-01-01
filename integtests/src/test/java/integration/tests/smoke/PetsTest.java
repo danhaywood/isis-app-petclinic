@@ -19,6 +19,7 @@
 package integration.tests.smoke;
 
 import dom.pets.Pet;
+import dom.pets.PetSpecies;
 import dom.pets.Pets;
 import fixture.pets.scenario.PetsFixture;
 import fixture.pets.PetClinicAppTearDownFixture;
@@ -99,11 +100,15 @@ public class PetsTest extends PetClinicAppIntegTest {
             nextTransaction();
 
             // when
-            wrap(pets).create("Bonzo");
+            wrap(pets).create("Bonzo", PetSpecies.Dog);
 
             // then
             final List<Pet> all = wrap(pets).listAll();
             assertThat(all.size(), is(1));
+            final Pet pet = all.get(0);
+
+            assertThat(pet.getName(), is("Bonzo"));
+            assertThat(pet.getSpecies(), is(PetSpecies.Dog));
         }
 
         @Test
@@ -113,14 +118,14 @@ public class PetsTest extends PetClinicAppIntegTest {
             fixtureScript = new PetClinicAppTearDownFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
-            wrap(pets).create("Bonzo");
+            wrap(pets).create("Bonzo", PetSpecies.Dog);
             nextTransaction();
 
             // then
             expectedException.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(pets).create("Bonzo");
+            wrap(pets).create("Bonzo", PetSpecies.Dog);
             nextTransaction();
         }
 

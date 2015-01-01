@@ -16,18 +16,14 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
+package dom.pets;
 
-package fixture.pets.objects;
+public enum PetSpecies {
 
-import dom.pets.PetSpecies;
-
-public class PetForTiddles extends PetAbstract {
-
-    @Override
-    protected void execute(ExecutionContext executionContext) {
-
-        create("Tiddles", PetSpecies.Cat, executionContext);
-    }
-
+    Cat,
+    Dog,
+    Budgie,
+    Hamster,
+    Tortoise
 
 }

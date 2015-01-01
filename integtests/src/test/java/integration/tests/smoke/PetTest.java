@@ -19,12 +19,13 @@
 package integration.tests.smoke;
 
 import dom.pets.Pet;
+import dom.pets.PetSpecies;
 import dom.pets.Pets;
 import fixture.pets.scenario.PetsFixture;
-import fixture.pets.PetClinicAppTearDownFixture;
 import integration.tests.PetClinicAppIntegTest;
 
 import javax.inject.Inject;
+import org.junit.Before;
 import org.junit.Test;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
@@ -39,44 +40,67 @@ public class PetTest extends PetClinicAppIntegTest {
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    Pets simpleObjects;
+    Pets pets;
 
     FixtureScript fixtureScript;
+    Pet petPojo;
+    Pet petWrapped;
+
+    @Before
+    public void setUp() throws Exception {
+
+        // given
+        fixtureScript = new PetsFixture();
+        fixtureScripts.runFixtureScript(fixtureScript, null);
+
+        petPojo = fixtureScript.lookup("pets-fixture/pet-for-fido/item-1", Pet.class);
+        assertThat(petPojo, is(not(nullValue())));
+
+        petWrapped = wrap(petPojo);
+    }
+
+    @Test
+    public void doesNotExist() throws Exception {
+
+        // when
+        Pet petPojo = fixtureScript.lookup("non-existent", Pet.class);
+
+        // then
+        assertThat(petPojo, is(nullValue()));
+    }
 
     public static class Name extends PetTest {
 
         @Test
-        public void exists() throws Exception {
+        public void canChange() throws Exception {
 
             // given
-            fixtureScript = new PetsFixture();
-            fixtureScripts.runFixtureScript(fixtureScript, null);
-
-            final Pet petPojo =
-                    fixtureScript.lookup("pets-fixture/pet-for-fido/item-1", Pet.class);
+            assertThat(petWrapped.getName(), is("Fido"));
 
             // when
-            assertThat(petPojo, is(not(nullValue())));
-            final Pet petWrapped = wrap(petPojo);
+            petWrapped.setName("Fred");
 
-            // then
-            assertThat(petWrapped.getName(), is("Fido"));
+            // given
+            assertThat(petWrapped.getName(), is("Fred"));
         }
+
+    }
+
+    public static class Species extends PetTest {
 
         @Test
-        public void doesNotExist() throws Exception {
+        public void canChange() throws Exception {
 
             // given
-            fixtureScript = new PetClinicAppTearDownFixture();
-            fixtureScripts.runFixtureScript(fixtureScript, null);
+            assertThat(petWrapped.getSpecies(), is(PetSpecies.Dog));
 
             // when
-            Pet petPojo = fixtureScript.lookup("non-existent", Pet.class);
+            petWrapped.setSpecies(PetSpecies.Cat);
 
-            // then
-            assertThat(petPojo, is(nullValue()));
-
+            // given
+            assertThat(petWrapped.getSpecies(), is(PetSpecies.Cat));
         }
+
     }
 
 }

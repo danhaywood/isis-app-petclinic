@@ -35,7 +35,8 @@ public class PetTest {
     public static class Name extends PetTest {
 
         @Test
-        public void happyCase() throws Exception {
+        public void canChange() throws Exception {
+
             // given
             String name = "Foobar";
             assertThat(pet.getName(), is(nullValue()));
@@ -45,6 +46,23 @@ public class PetTest {
 
             // then
             assertThat(pet.getName(), is(name));
+        }
+    }
+
+    public static class Species extends PetTest {
+
+        @Test
+        public void canChange() throws Exception {
+
+            // given
+            PetSpecies species = PetSpecies.Dog;
+            assertThat(pet.getSpecies(), is(nullValue()));
+
+            // when
+            pet.setSpecies(species);
+
+            // then
+            assertThat(pet.getSpecies(), is(species));
         }
     }
 

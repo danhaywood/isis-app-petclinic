@@ -19,12 +19,14 @@
 
 package fixture.pets.objects;
 
+import dom.pets.PetSpecies;
+
 public class PetForFido extends PetAbstract {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
 
-        create("Fido", executionContext);
+        create("Fido", PetSpecies.Dog, executionContext);
     }
 
 

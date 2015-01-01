@@ -20,17 +20,21 @@
 package fixture.pets.objects;
 
 import dom.pets.Pet;
+import dom.pets.PetSpecies;
 import dom.pets.Pets;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 public abstract class PetAbstract extends FixtureScript {
 
-    protected Pet create(final String name, ExecutionContext executionContext) {
-        return executionContext.addResult(this, simpleObjects.create(name));
+    protected Pet create(
+            final String name,
+            final PetSpecies species,
+            final ExecutionContext executionContext) {
+        return executionContext.addResult(this, pets.create(name, species));
     }
 
     @javax.inject.Inject
-    private Pets simpleObjects;
+    private Pets pets;
 
 }

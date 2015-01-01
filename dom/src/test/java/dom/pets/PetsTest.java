@@ -39,12 +39,12 @@ public class PetsTest {
     @Mock
     DomainObjectContainer mockContainer;
     
-    Pets simpleObjects;
+    Pets pets;
 
     @Before
     public void setUp() throws Exception {
-        simpleObjects = new Pets();
-        simpleObjects.container = mockContainer;
+        pets = new Pets();
+        pets.container = mockContainer;
     }
 
     public static class Create extends PetsTest {
@@ -68,11 +68,12 @@ public class PetsTest {
             });
 
             // when
-            final Pet obj = simpleObjects.create("Foobar");
+            final Pet obj = pets.create("Bonzo", PetSpecies.Dog);
 
             // then
             assertThat(obj, is(pet));
-            assertThat(obj.getName(), is("Foobar"));
+            assertThat(obj.getName(), is("Bonzo"));
+            assertThat(obj.getSpecies(), is(PetSpecies.Dog));
         }
 
     }
@@ -93,7 +94,7 @@ public class PetsTest {
             });
 
             // when
-            final List<Pet> list = simpleObjects.listAll();
+            final List<Pet> list = pets.listAll();
 
             // then
             assertThat(list, is(all));

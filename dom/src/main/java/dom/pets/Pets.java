@@ -44,9 +44,11 @@ public class Pets {
     //region > create (action)
     @MemberOrder(sequence = "2")
     public Pet create(
-            final @ParameterLayout(named="Name") String name) {
+            final @ParameterLayout(named = "Name") String name,
+            final PetSpecies species) {
         final Pet obj = container.newTransientInstance(Pet.class);
         obj.setName(name);
+        obj.setSpecies(species);
         container.persistIfNotAlready(obj);
         return obj;
     }

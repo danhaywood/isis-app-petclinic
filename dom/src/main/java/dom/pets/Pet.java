@@ -34,8 +34,8 @@ import org.apache.isis.applib.util.ObjectContracts;
 @javax.jdo.annotations.Version(
         strategy=VersionStrategy.VERSION_NUMBER, 
         column="version")
-@javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
-@ObjectType("SIMPLE")
+@javax.jdo.annotations.Unique(name="Pet_name_UNQ", members = {"name"})
+@ObjectType("PET")
 @Bookmarkable
 public class Pet implements Comparable<Pet> {
 
@@ -56,6 +56,19 @@ public class Pet implements Comparable<Pet> {
 
     //endregion
 
+    //region > species (property)
+    private PetSpecies species;
+
+    @javax.jdo.annotations.Column(allowsNull = "false")
+    public PetSpecies getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(final PetSpecies species) {
+        this.species = species;
+    }
+    //endregion
+    
     //region > compareTo
 
     @Override
