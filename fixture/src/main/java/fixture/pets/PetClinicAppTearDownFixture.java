@@ -27,6 +27,7 @@ public class PetClinicAppTearDownFixture extends FixtureScript {
     @Override
     protected void execute(ExecutionContext executionContext) {
         isisJdoSupport.executeUpdate("delete from \"Pet\"");
+        isisJdoSupport.executeUpdate("delete from \"Owner\"");
     }
 
 

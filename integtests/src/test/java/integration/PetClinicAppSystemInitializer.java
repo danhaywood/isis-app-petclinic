@@ -48,7 +48,9 @@ public class PetClinicAppSystemInitializer {
 
             // services annotated with @DomainService
             withServicesIn( "dom.pets"
+                            ,"dom.owners"
                             ,"fixture.pets"
+                            ,"fixture.owners"
                             ,"org.apache.isis.core.wrapper"
                             ,"org.apache.isis.applib"
                             ,"org.apache.isis.core.metamodel.services"

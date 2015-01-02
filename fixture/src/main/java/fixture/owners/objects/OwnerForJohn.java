@@ -17,18 +17,15 @@
  *  under the License.
  */
 
-package fixture.pets.objects;
+package fixture.owners.objects;
 
-import dom.pets.PetSpecies;
-import fixture.owners.objects.OwnerForBill;
+public class OwnerForJohn extends OwnerAbstract {
 
-public class PetForSkye extends PetAbstract {
-
-    public static final String NAME = "Skye";
+    public static final String NAME = "John";
 
     @Override
     protected void execute(final ExecutionContext executionContext) {
-        create(NAME, PetSpecies.Budgie, findOwner(OwnerForBill.NAME), executionContext);
+        create(NAME, executionContext);
     }
 
 

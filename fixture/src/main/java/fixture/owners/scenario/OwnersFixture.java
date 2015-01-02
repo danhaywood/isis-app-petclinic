@@ -17,19 +17,31 @@
  *  under the License.
  */
 
-package fixture.pets.objects;
+package fixture.owners.scenario;
 
-import dom.pets.PetSpecies;
 import fixture.owners.objects.OwnerForBill;
+import fixture.owners.objects.OwnerForFred;
+import fixture.owners.objects.OwnerForJohn;
+import fixture.owners.objects.OwnerForMary;
+import fixture.pets.PetClinicAppTearDownFixture;
 
-public class PetForSkye extends PetAbstract {
+import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-    public static final String NAME = "Skye";
+public class OwnersFixture extends FixtureScript {
 
-    @Override
-    protected void execute(final ExecutionContext executionContext) {
-        create(NAME, PetSpecies.Budgie, findOwner(OwnerForBill.NAME), executionContext);
+    public OwnersFixture() {
+        withDiscoverability(Discoverability.DISCOVERABLE);
     }
 
+    @Override
+    protected void execute(ExecutionContext executionContext) {
+
+        executionContext.executeChild(this, new PetClinicAppTearDownFixture());
+
+        executionContext.executeChild(this, new OwnerForFred());
+        executionContext.executeChild(this, new OwnerForBill());
+        executionContext.executeChild(this, new OwnerForJohn());
+        executionContext.executeChild(this, new OwnerForMary());
+    }
 
 }

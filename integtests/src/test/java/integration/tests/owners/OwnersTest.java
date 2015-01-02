@@ -16,16 +16,12 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package integration.tests.smoke;
+package integration.tests.owners;
 
 import dom.owners.Owner;
 import dom.owners.Owners;
-import dom.pets.Pet;
-import dom.pets.PetSpecies;
-import dom.pets.Pets;
 import fixture.owners.scenario.OwnersFixture;
 import fixture.pets.PetClinicAppTearDownFixture;
-import fixture.pets.scenario.PetsFixture;
 import integration.tests.PetClinicAppIntegTest;
 
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -39,10 +35,9 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import static integration.tests.util.Util.causalChainContains;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-public class PetsTest extends PetClinicAppIntegTest {
+public class OwnersTest extends PetClinicAppIntegTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -50,30 +45,30 @@ public class PetsTest extends PetClinicAppIntegTest {
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    Pets pets;
-    @Inject
     Owners owners;
 
     FixtureScript fixtureScript;
 
-    public static class ListAll extends PetsTest {
+    public static class ListAll extends OwnersTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            fixtureScript = new PetsFixture();
+            fixtureScript = new OwnersFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
 
             // when
-            final List<Pet> all = wrap(pets).listAll();
+            // (haven't wrapped 'owners' service because this is a prototype action
+            // that isn't otherwise available in integ tests if wrapped)
+            final List<Owner> all = owners.listAll();
 
             // then
-            assertThat(all.size(), is(3));
+            assertThat(all.size(), is(4));
 
-            Pet pet = wrap(all.get(0));
-            assertThat(pet.getName(), is("Skye"));
+            Owner owner = wrap(all.get(0));
+            assertThat(owner.getName(), is("Fred"));
         }
 
         @Test
@@ -85,14 +80,16 @@ public class PetsTest extends PetClinicAppIntegTest {
             nextTransaction();
 
             // when
-            final List<Pet> all = wrap(pets).listAll();
+            // (haven't wrapped 'owners' service because this is a prototype action
+            // that isn't otherwise available in integ tests if wrapped)
+            final List<Owner> all = owners.listAll();
 
             // then
             assertThat(all.size(), is(0));
         }
     }
 
-    public static class Create extends PetsTest {
+    public static class FindByName extends OwnersTest {
 
         @Test
         public void happyCase() throws Exception {
@@ -102,44 +99,73 @@ public class PetsTest extends PetClinicAppIntegTest {
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
 
-            final Owner owner = fixtureScript.lookup("owners-fixture/owner-for-bill/item-1", Owner.class);
-            assertThat(owner, is(notNullValue()));
-
             // when
-            wrap(pets).create("Bonzo", PetSpecies.Dog, owner);
+            final List<Owner> found = wrap(owners).findByName("r");
 
             // then
-            final List<Pet> all = wrap(pets).listAll();
-            assertThat(all.size(), is(1));
-            final Pet pet = all.get(0);
+            assertThat(found.size(), is(2));
 
-            assertThat(pet.getName(), is("Bonzo"));
-            assertThat(pet.getSpecies(), is(PetSpecies.Dog));
-            assertThat(pet.getOwner(), is(owner));
+            Owner owner = wrap(found.get(0));
+            assertThat(owner.getName(), is("Fred"));
+            Owner owner2 = wrap(found.get(1));
+            assertThat(owner2.getName(), is("Mary"));
         }
 
         @Test
-        public void whenAlreadyExists() throws Exception {
+        public void whenNone() throws Exception {
 
             // given
             fixtureScript = new OwnersFixture();
             fixtureScripts.runFixtureScript(fixtureScript, null);
             nextTransaction();
 
-            final Owner owner = fixtureScript.lookup("owners-fixture/owner-for-bill/item-1", Owner.class);
-            assertThat(owner, is(notNullValue()));
+            // when
+            final List<Owner> found = wrap(this.owners).findByName("zzz");
 
-            wrap(pets).create("Bonzo", PetSpecies.Dog, owner);
+            // then
+            assertThat(found.size(), is(0));
+        }
+    }
+
+    public static class Create extends OwnersTest {
+
+        @Test
+        public void happyCase() throws Exception {
+
+            // given
+            fixtureScript = new PetClinicAppTearDownFixture();
+            fixtureScripts.runFixtureScript(fixtureScript, null);
+            nextTransaction();
+
+            // when
+            wrap(owners).create("Bill");
+
+            // then
+            final List<Owner> all = owners.listAll();
+            assertThat(all.size(), is(1));
+            final Owner owner = all.get(0);
+            assertThat(owner.getName(), is("Bill"));
+        }
+
+        @Test
+        public void whenAlreadyExists() throws Exception {
+
+            // given
+            fixtureScript = new PetClinicAppTearDownFixture();
+            fixtureScripts.runFixtureScript(fixtureScript, null);
+            nextTransaction();
+
+            wrap(owners).create("Bill");
             nextTransaction();
 
             // then
             expectedException.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(pets).create("Bonzo", PetSpecies.Dog, owner);
+            wrap(owners).create("Bill");
             nextTransaction();
         }
 
-    }
+   }
 
 }

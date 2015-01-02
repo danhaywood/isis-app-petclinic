@@ -38,7 +38,7 @@ import org.apache.isis.applib.fixturescripts.SimpleFixtureScript;
 public class PetClinicAppFixturesService extends FixtureScripts {
 
     public PetClinicAppFixturesService() {
-        super("fixture.pets");
+        super("fixture");
     }
 
     @Override

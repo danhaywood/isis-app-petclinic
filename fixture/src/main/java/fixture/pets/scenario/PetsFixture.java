@@ -19,10 +19,11 @@
 
 package fixture.pets.scenario;
 
+import fixture.owners.scenario.OwnersFixture;
 import fixture.pets.PetClinicAppTearDownFixture;
 import fixture.pets.objects.PetForFido;
-import fixture.pets.objects.PetForTiddles;
 import fixture.pets.objects.PetForSkye;
+import fixture.pets.objects.PetForTiddles;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
@@ -36,6 +37,8 @@ public class PetsFixture extends FixtureScript {
     protected void execute(ExecutionContext executionContext) {
 
         executionContext.executeChild(this, new PetClinicAppTearDownFixture());
+
+        executionContext.executeChild(this, new OwnersFixture());
 
         executionContext.executeChild(this, new PetForSkye());
         executionContext.executeChild(this, new PetForFido());

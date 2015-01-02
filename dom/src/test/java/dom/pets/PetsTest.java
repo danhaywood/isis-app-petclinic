@@ -16,6 +16,8 @@
  */
 package dom.pets;
 
+import dom.owners.Owner;
+
 import java.util.List;
 import com.google.common.collect.Lists;
 import org.jmock.Expectations;
@@ -68,12 +70,14 @@ public class PetsTest {
             });
 
             // when
-            final Pet obj = pets.create("Bonzo", PetSpecies.Dog);
+            final Owner owner = new Owner();
+            final Pet obj = pets.create("Bonzo", PetSpecies.Dog, owner);
 
             // then
             assertThat(obj, is(pet));
             assertThat(obj.getName(), is("Bonzo"));
             assertThat(obj.getSpecies(), is(PetSpecies.Dog));
+            assertThat(obj.getOwner(), is(owner));
         }
 
     }

@@ -16,18 +16,13 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package dom.pets;
+package dom.owners;
 
-import dom.owners.Owner;
-import dom.owners.Owners;
-
-import java.util.Collection;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Bookmarkable;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.MinLength;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.util.ObjectContracts;
@@ -39,16 +34,17 @@ import org.apache.isis.applib.util.ObjectContracts;
 @javax.jdo.annotations.Version(
         strategy=VersionStrategy.VERSION_NUMBER, 
         column="version")
-@javax.jdo.annotations.Unique(name="Pet_name_UNQ", members = {"name"})
-@ObjectType("PET")
+@javax.jdo.annotations.Queries( {
+        @javax.jdo.annotations.Query(
+                name = "findByName", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM dom.owners.Owner "
+                        + "WHERE name.matches(:name)")
+})
+@javax.jdo.annotations.Unique(name="Owner_name_UNQ", members = {"name"})
+@ObjectType("OWNER")
 @Bookmarkable
-public class Pet implements Comparable<Pet> {
-
-    //region > iconName
-    public String iconName() {
-        return getSpecies().name();
-    }
-    //endregion
+public class Owner implements Comparable<Owner> {
 
     //region > name (property)
 
@@ -56,7 +52,6 @@ public class Pet implements Comparable<Pet> {
 
     @javax.jdo.annotations.Column(allowsNull="false")
     @Title(sequence="1")
-    @MemberOrder(sequence="1")
     public String getName() {
         return name;
     }
@@ -67,40 +62,10 @@ public class Pet implements Comparable<Pet> {
 
     //endregion
 
-    //region > species (property)
-    private PetSpecies species;
-
-    @javax.jdo.annotations.Column(allowsNull = "false")
-    public PetSpecies getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(final PetSpecies species) {
-        this.species = species;
-    }
-    //endregion
-
-    //region > owner (property)
-    private Owner owner;
-
-    @javax.jdo.annotations.Column(allowsNull = "false")
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(final Owner owner) {
-        this.owner = owner;
-    }
-
-    public Collection<Owner> autoCompleteOwner(final @MinLength(1) String name) {
-        return owners.findByName(name);
-    }
-    //endregion
-
     //region > compareTo
 
     @Override
-    public int compareTo(Pet other) {
+    public int compareTo(final Owner other) {
         return ObjectContracts.compare(this, other, "name");
     }
 
@@ -112,8 +77,6 @@ public class Pet implements Comparable<Pet> {
     @SuppressWarnings("unused")
     private DomainObjectContainer container;
 
-    @javax.inject.Inject
-    private Owners owners;
     //endregion
 
 }

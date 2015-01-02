@@ -16,9 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package dom.pets;
-
-import dom.owners.Owner;
+package dom.owners;
 
 import java.util.List;
 import org.apache.isis.applib.DomainObjectContainer;
@@ -28,45 +26,56 @@ import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.NotContributed;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Prototype;
+import org.apache.isis.applib.query.QueryDefault;
 
-@DomainService(repositoryFor = Pet.class)
-@DomainServiceLayout(menuOrder = "10")
-public class Pets {
+@DomainService(repositoryFor = Owner.class)
+@DomainServiceLayout(menuOrder = "20")
+public class Owners {
 
     //region > listAll (action)
 
     @Bookmarkable
     @ActionSemantics(Of.SAFE)
     @MemberOrder(sequence = "1")
-    public List<Pet> listAll() {
-        return container.allInstances(Pet.class);
+    @Prototype
+    public List<Owner> listAll() {
+        return container.allInstances(Owner.class);
     }
 
     //endregion
 
     //region > create (action)
-    @NotContributed
     @MemberOrder(sequence = "2")
-    public Pet create(
-            final @ParameterLayout(named = "Name") String name,
-            final PetSpecies species, final Owner owner) {
-        final Pet pet = container.newTransientInstance(Pet.class);
-        pet.setName(name);
-        pet.setSpecies(species);
-        pet.setOwner(owner);
-        container.persistIfNotAlready(pet);
-        return pet;
+    public Owner create(
+            final @ParameterLayout(named = "Name") String name) {
+        final Owner obj = container.newTransientInstance(Owner.class);
+        obj.setName(name);
+        container.persistIfNotAlready(obj);
+        return obj;
     }
 
     //endregion
 
+    //region > findByName (action)
+    @MemberOrder(sequence = "1")
+    public List<Owner> findByName(
+            @ParameterLayout(named = "Name")
+            final String name) {
+        final String nameArg = String.format(".*%s.*", name);
+        final List<Owner> owners = container.allMatches(
+                new QueryDefault<>(
+                        Owner.class,
+                        "findByName",
+                        "name", nameArg));
+        return owners;
+    }
+    //endregion
+
     //region > injected services
-
-    @javax.inject.Inject 
+    @javax.inject.Inject
     DomainObjectContainer container;
-
     //endregion
 
 }

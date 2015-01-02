@@ -14,38 +14,39 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-{
-  "columns": [
-    {
-      "span": 6,
-      "memberGroups": {
-        "General": {
-          "members": {
-            "name": {},
-            "species": {}
-          }
-        },
-        "Owner": {
-          "members": {
-            "owner": {}
-          }
-        }
-      }
-    },
-    {
-      "span": 0,
-      "memberGroups": {
-      }
-    },
-    {
-      "span": 0,
-      "memberGroups": {}
-    },
-    {
-      "span": 6,
-      "collections": {}
+package dom.owners;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+
+public class OwnerTest {
+
+    Owner owner;
+
+    @Before
+    public void setUp() throws Exception {
+        owner = new Owner();
     }
-  ],
-  "actions": {}
+
+    public static class Name extends OwnerTest {
+
+        @Test
+        public void canChange() throws Exception {
+
+            // given
+            String name = "Bill";
+            assertThat(owner.getName(), is(nullValue()));
+
+            // when
+            owner.setName(name);
+
+            // then
+            assertThat(owner.getName(), is(name));
+        }
+    }
+
 }
- 

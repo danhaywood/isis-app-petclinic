@@ -20,14 +20,18 @@
 package fixture.pets.objects;
 
 import dom.pets.PetSpecies;
+import fixture.owners.objects.OwnerForMary;
 
 public class PetForTiddles extends PetAbstract {
 
-    @Override
-    protected void execute(ExecutionContext executionContext) {
+    public static final String NAME = "Tiddles";
 
-        create("Tiddles", PetSpecies.Cat, executionContext);
+    @Override
+    protected void execute(final ExecutionContext executionContext) {
+        create(NAME, PetSpecies.Cat, findOwner(OwnerForMary.NAME), executionContext);
     }
+
+
 
 
 }

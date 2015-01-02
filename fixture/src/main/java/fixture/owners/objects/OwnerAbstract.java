@@ -17,19 +17,23 @@
  *  under the License.
  */
 
-package fixture.pets.objects;
+package fixture.owners.objects;
 
-import dom.pets.PetSpecies;
-import fixture.owners.objects.OwnerForBill;
+import dom.owners.Owner;
+import dom.owners.Owners;
 
-public class PetForSkye extends PetAbstract {
+import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-    public static final String NAME = "Skye";
+public abstract class OwnerAbstract extends FixtureScript {
 
-    @Override
-    protected void execute(final ExecutionContext executionContext) {
-        create(NAME, PetSpecies.Budgie, findOwner(OwnerForBill.NAME), executionContext);
+    protected Owner create(
+            final String name,
+            final ExecutionContext executionContext) {
+        Owner owner = owners.create(name);
+        return executionContext.addResult(this, owner);
     }
 
+    @javax.inject.Inject
+    private Owners owners;
 
 }
